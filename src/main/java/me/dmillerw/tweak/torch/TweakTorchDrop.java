@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 public class TweakTorchDrop implements Tweak {
 
     @Override
-    public void initialize() {
+    public void register() {
         MinecraftForge.EVENT_BUS.register(new TorchEventHandler());
         EntityRegistry.registerModEntity(EntityBlockItem.class, "blockItem", 1, DatTweak.instance, 64, 64, true);
     }

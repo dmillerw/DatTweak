@@ -5,5 +5,5 @@ package me.dmillerw.tweak.core;
  */
 public interface Tweak {
 
-    public void initialize();
+    public void register();
 }

@@ -1,5 +1,6 @@
 package me.dmillerw.tweak.torch;
 
+import me.dmillerw.tweak.core.TweakLoader;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -17,6 +18,9 @@ public class TorchEventHandler {
 
     @SubscribeEvent
     public void onItemDrop(ItemTossEvent event) {
+        if (!TweakLoader.isTweakEnabled(TweakLoader.Type.TORCH_DROP))
+            return;
+
         if (event.player.worldObj.isRemote)
             return;
 

@@ -1,11 +1,13 @@
 package me.dmillerw.tweak.shift;
 
+import me.dmillerw.tweak.core.TweakLoader;
 import me.dmillerw.tweak.core.util.RenderUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
@@ -29,10 +31,17 @@ public class ShiftEventHandler {
 
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
+        if (!TweakLoader.isTweakEnabled(TweakLoader.Type.SHIFT))
+            return;
+
         if (TweakShift.KEY_SHIFT.isPressed()) {
             final EntityPlayer player = FMLClientHandler.instance().getClientPlayerEntity();
             if (player.isSneaking()) {
                 state.offset = !state.offset;
+                if (state.offset)
+                    player.addChatMessage(new ChatComponentText("Offsetting shifting"));
+                else
+                    player.addChatMessage(new ChatComponentText("Keeping the shifting to a minimum"));
             } else {
                 if (state.facing == null) {
                     state.facing = EnumFacing.DOWN;
@@ -41,12 +50,23 @@ public class ShiftEventHandler {
                 } else {
                     state.facing = EnumFacing.values()[state.facing.ordinal() + 1];
                 }
+
+                if (state.facing == null) {
+                    player.addChatMessage(new ChatComponentText("Ceasing to shift"));
+                } else if (state.facing == EnumFacing.DOWN || state.facing == EnumFacing.UP) {
+                    player.addChatMessage(new ChatComponentText("Shifting " + state.facing.name().toLowerCase()));
+                } else {
+                    player.addChatMessage(new ChatComponentText("Shifting to the " + state.facing.name().toLowerCase()));
+                }
             }
         }
     }
 
     @SubscribeEvent
     public void onBlockInteract(PlayerInteractEvent event) {
+        if (!TweakLoader.isTweakEnabled(TweakLoader.Type.SHIFT))
+            return;
+
         if (!event.world.isRemote)
             return;
 
@@ -84,6 +104,9 @@ public class ShiftEventHandler {
 
     @SubscribeEvent
     public void onBlockHighlight(DrawBlockHighlightEvent event) {
+        if (!TweakLoader.isTweakEnabled(TweakLoader.Type.SHIFT))
+            return;
+
         final EntityPlayer entityPlayer = FMLClientHandler.instance().getClientPlayerEntity();
 
         if (event.target.typeOfHit != MovingObjectPosition.MovingObjectType.BLOCK)

@@ -11,9 +11,10 @@ import org.lwjgl.input.Keyboard;
 public class TweakShift implements Tweak {
 
     public static KeyBinding KEY_SHIFT = new KeyBinding("key.block_shift", Keyboard.KEY_G, "key.misc");
+    private static ShiftEventHandler eventHandler = new ShiftEventHandler();
 
     @Override
-    public void initialize() {
-        MinecraftForge.EVENT_BUS.register(new ShiftEventHandler());
+    public void register() {
+        MinecraftForge.EVENT_BUS.register(eventHandler);
     }
 }
