@@ -21,7 +21,7 @@ public class DatTweak {
     public void preInit(FMLPreInitializationEvent event) {
         TweakLoader.configuration = new Configuration(event.getSuggestedConfigurationFile());
         TweakLoader.configuration.load();
-        TweakLoader.init();
+        TweakLoader.initialize();
 
         if (TweakLoader.configuration.hasChanged())
             TweakLoader.configuration.save();

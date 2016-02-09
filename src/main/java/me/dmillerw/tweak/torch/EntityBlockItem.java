@@ -1,4 +1,4 @@
-package me.dmillerw.tweak.core.torch;
+package me.dmillerw.tweak.torch;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;

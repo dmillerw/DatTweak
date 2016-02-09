@@ -1,7 +1,8 @@
 package me.dmillerw.tweak.core;
 
 import com.google.common.collect.Sets;
-import me.dmillerw.tweak.core.torch.TweakTorchDrop;
+import me.dmillerw.tweak.torch.TweakTorchDrop;
+import me.dmillerw.tweak.wiggle.TweakWiggle;
 import net.minecraftforge.common.config.Configuration;
 
 import java.util.Set;
@@ -18,12 +19,13 @@ public class TweakLoader {
 
     static {
         tweaks.add(new TweakTorchDrop());
+        tweaks.add(new TweakWiggle());
     }
 
-    public static void init() {
+    public static void initialize() {
         for (Tweak t : tweaks) {
             if (configuration.getBoolean(getName(t), CATEGORY, true, "")) {
-                t.init();
+                t.initialize();
             }
         }
     }
