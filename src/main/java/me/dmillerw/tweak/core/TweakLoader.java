@@ -2,8 +2,6 @@ package me.dmillerw.tweak.core;
 
 import com.google.common.collect.Maps;
 import me.dmillerw.tweak.core.network.message.MessageServerConfig;
-import me.dmillerw.tweak.shift.TweakShift;
-import me.dmillerw.tweak.torch.TweakTorchDrop;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -20,30 +18,12 @@ public class TweakLoader {
 
     private static String CATEGORY = "tweaks";
 
-    public static enum Type {
-        TORCH_DROP(TweakTorchDrop.class),
-        SHIFT(TweakShift.class);
-
-        private Class<? extends Tweak> clazz;
-        private Type(Class<? extends Tweak> clazz) {
-            this.clazz = clazz;
-        }
-
-        public Tweak newInstance() {
-            try {
-                return clazz.newInstance();
-            } catch (Exception ex) {
-                return null;
-            }
-        }
-    }
-
     public static Configuration configuration;
-    private static final EnumMap<Type, Tweak> tweaks = Maps.newEnumMap(Type.class);
-    private static final EnumSet<Type> enabledTweaks = EnumSet.noneOf(Type.class);
+    private static final EnumMap<Tweak.Type, Tweak> tweaks = Maps.newEnumMap(Tweak.Type.class);
+    private static final EnumSet<Tweak.Type> enabledTweaks = EnumSet.noneOf(Tweak.Type.class);
 
     static {
-        for (TweakLoader.Type type : TweakLoader.Type.values()) {
+        for (Tweak.Type type : Tweak.Type.values()) {
             Tweak tweak = type.newInstance();
             if (tweak != null)
                 tweaks.put(type, tweak);
@@ -52,7 +32,7 @@ public class TweakLoader {
 
     public static void enable(boolean callMethod) {
         enabledTweaks.clear();
-        for (Map.Entry<Type, Tweak> entry : tweaks.entrySet()) {
+        for (Map.Entry<Tweak.Type, Tweak> entry : tweaks.entrySet()) {
             if (configuration.get(CATEGORY, entry.getKey().name(), true).getBoolean(true)) {
                 enabledTweaks.add(entry.getKey());
             }
@@ -61,11 +41,11 @@ public class TweakLoader {
         }
     }
 
-    public static Set<Type> getEnabledTweaks() {
+    public static Set<Tweak.Type> getEnabledTweaks() {
         return enabledTweaks;
     }
 
-    public static boolean isTweakEnabled(Type type) {
+    public static boolean isTweakEnabled(Tweak.Type type) {
         return enabledTweaks.contains(type);
     }
 

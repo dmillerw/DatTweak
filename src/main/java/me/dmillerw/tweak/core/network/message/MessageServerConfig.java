@@ -1,6 +1,7 @@
 package me.dmillerw.tweak.core.network.message;
 
 import io.netty.buffer.ByteBuf;
+import me.dmillerw.tweak.core.Tweak;
 import me.dmillerw.tweak.core.TweakLoader;
 import me.dmillerw.tweak.core.network.PacketHandler;
 import net.minecraft.client.Minecraft;
@@ -31,7 +32,7 @@ public class MessageServerConfig implements IMessage {
     }
 
     public boolean reset = false;
-    public Set<TweakLoader.Type> tweaks = EnumSet.noneOf(TweakLoader.Type.class);
+    public Set<Tweak.Type> tweaks = EnumSet.noneOf(Tweak.Type.class);
 
     @Override
     public void toBytes(ByteBuf buf) {
@@ -41,7 +42,7 @@ public class MessageServerConfig implements IMessage {
         }
 
         buf.writeInt(tweaks.size());
-        for (TweakLoader.Type type : tweaks)
+        for (Tweak.Type type : tweaks)
             buf.writeInt(type.ordinal());
     }
 
@@ -54,7 +55,7 @@ public class MessageServerConfig implements IMessage {
 
         final int size = buf.readInt();
         for (int i=0; i<size; i++) {
-            tweaks.add(TweakLoader.Type.values()[buf.readInt()]);
+            tweaks.add(Tweak.Type.values()[buf.readInt()]);
         }
     }
 
