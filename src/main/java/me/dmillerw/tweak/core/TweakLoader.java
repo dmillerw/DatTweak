@@ -2,7 +2,7 @@ package me.dmillerw.tweak.core;
 
 import com.google.common.collect.Sets;
 import me.dmillerw.tweak.torch.TweakTorchDrop;
-import me.dmillerw.tweak.wiggle.TweakWiggle;
+import me.dmillerw.tweak.shift.TweakShift;
 import net.minecraftforge.common.config.Configuration;
 
 import java.util.Set;
@@ -19,7 +19,7 @@ public class TweakLoader {
 
     static {
         tweaks.add(new TweakTorchDrop());
-        tweaks.add(new TweakWiggle());
+        tweaks.add(new TweakShift());
     }
 
     public static void initialize() {
