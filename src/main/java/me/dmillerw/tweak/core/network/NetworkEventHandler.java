@@ -1,4 +1,4 @@
-package me.dmillerw.tweak.core.handler;
+package me.dmillerw.tweak.core.network;
 
 import me.dmillerw.tweak.core.network.message.MessageServerConfig;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
