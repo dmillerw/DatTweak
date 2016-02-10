@@ -1,4 +1,6 @@
 # DatTweak
+[![Build Status](https://drone.io/github.com/dmillerw/DatTweak/status.png)](https://drone.io/github.com/dmillerw/DatTweak/latest)
+
 A collection of purely functional tweaks for Minecraft 1.8.9
 
 ## Torch Drop
